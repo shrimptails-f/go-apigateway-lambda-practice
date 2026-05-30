@@ -1,6 +1,6 @@
 # Lambda は ECR のコンテナイメージを使って起動する
 
-既存の `backend-user` ECR repository を参照する [infra/main.go:99](/home/dev/backend/infra/main.go:99)
+既存の `backend-user` ECR repository を参照する [infra/main.go](/home/dev/backend/infra/main.go)
 ```go
 func importEcrRepository(stack awscdk.Stack) awsecr.IRepository {
 	return awsecr.Repository_FromRepositoryName(
@@ -11,7 +11,7 @@ func importEcrRepository(stack awscdk.Stack) awsecr.IRepository {
 }
 ```
 
-`DockerImageCode_FromEcr` で ECR イメージを Lambda のコードとして使う [infra/main.go:109](/home/dev/backend/infra/main.go:109)
+`DockerImageCode_FromEcr` で ECR イメージを Lambda のコードとして使う [infra/main.go](/home/dev/backend/infra/main.go)
 ```go
 fn := awslambda.NewDockerImageFunction(stack, jsii.String("UserFunction"), &awslambda.DockerImageFunctionProps{
 	FunctionName: jsii.String("backend-user"),

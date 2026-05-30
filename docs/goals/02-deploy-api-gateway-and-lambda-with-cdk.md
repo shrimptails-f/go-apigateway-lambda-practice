@@ -1,6 +1,6 @@
 # AWS CDK で API Gateway と Lambda をまとめてデプロイする
 
-network, repository, application を組み立ててスタックに載せる [infra/main.go:43](/home/dev/backend/infra/main.go:43)
+network, repository, application を組み立ててスタックに載せる [infra/main.go](/home/dev/backend/infra/main.go)
 ```go
 network := createNetworkResources(stack)
 repository := importEcrRepository(stack)
@@ -11,7 +11,7 @@ awscdk.NewCfnOutput(stack, jsii.String("ApiUrl"), &awscdk.CfnOutputProps{
 })
 ```
 
-Lambda, authorizer, API Gateway を CDK で作成する [infra/main.go:108](/home/dev/backend/infra/main.go:108)
+Lambda, authorizer, API Gateway を CDK で作成する [infra/main.go](/home/dev/backend/infra/main.go)
 ```go
 func createApplicationResources(stack awscdk.Stack, network networkResources, repository awsecr.IRepository) applicationResources {
 	fn := awslambda.NewDockerImageFunction(stack, jsii.String("UserFunction"), &awslambda.DockerImageFunctionProps{

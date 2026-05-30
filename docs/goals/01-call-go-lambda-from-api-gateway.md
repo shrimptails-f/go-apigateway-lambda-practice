@@ -1,6 +1,6 @@
 # Go で書いた Lambda を API Gateway から呼び出す
 
-API Gateway と Lambda をデプロイする [infra/main.go:126](/home/dev/backend/infra/main.go:126)
+API Gateway と Lambda をデプロイする [infra/main.go](/home/dev/backend/infra/main.go)
 ```go
 api := awsapigateway.NewLambdaRestApi(stack, jsii.String("UserApi"), &awsapigateway.LambdaRestApiProps{
 	Handler: fn,
@@ -11,7 +11,7 @@ api := awsapigateway.NewLambdaRestApi(stack, jsii.String("UserApi"), &awsapigate
 })
 ```
 
-Lambda handler を起動エントリポイントで登録する [cmd/api/user/main.go:11](/home/dev/backend/cmd/api/user/main.go:11)
+Lambda handler を起動エントリポイントで登録する [cmd/api/user/main.go](/home/dev/backend/cmd/api/user/main.go)
 ```go
 func main() {
 	repo := repository.NewInMemoryUserRepository()
@@ -24,7 +24,7 @@ func main() {
 }
 ```
 
-`/users` と `/user/{id}` の path を解析する [internal/presentation/user/router.go:24](/home/dev/backend/internal/presentation/user/router.go:24)
+`/users` と `/user/{id}` の path を解析する [internal/presentation/user/router.go](/home/dev/backend/internal/presentation/user/router.go)
 ```go
 func parseRoute(req events.APIGatewayProxyRequest) (route, error) {
 	path := strings.Trim(req.Path, "/")
@@ -57,7 +57,7 @@ type APIGatewayProxyRequest struct {
 }
 ```
 
-API Gateway request を受けて route ごとに usecase へ振り分ける [internal/presentation/user/handler.go:24](/home/dev/backend/internal/presentation/user/handler.go:24)
+API Gateway request を受けて route ごとに usecase へ振り分ける [internal/presentation/user/handler.go](/home/dev/backend/internal/presentation/user/handler.go)
 ```go
 func (h Handler) Handle(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	route, err := parseRoute(req)
@@ -67,4 +67,3 @@ func (h Handler) Handle(ctx context.Context, req events.APIGatewayProxyRequest) 
 
 	switch route.kind {
 ```
-
