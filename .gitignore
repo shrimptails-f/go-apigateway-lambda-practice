@@ -4,6 +4,7 @@
 infra/infra
 /user
 /main
+coverage.html
 
 # node
 node_modules

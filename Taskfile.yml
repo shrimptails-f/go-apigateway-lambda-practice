@@ -30,6 +30,13 @@ tasks:
     cmds:
       - go run main.go
 
+  test:
+    desc: "カバレッジ率を取得する。"
+    cmds:
+      - go test -race -coverprofile=coverage.out ./internal/...
+      - go tool cover -html=coverage.out -o coverage.html
+      - rm coverage.out
+
   infra:install:
     desc: "Go CDK と CLI 依存関係をインストールする"
     dir: infra
