@@ -5,6 +5,7 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 
+	cp "backend/internal/common/presentation"
 	"backend/internal/user/domain"
 )
 
@@ -23,14 +24,14 @@ func NewHandler(listUseCase ListUseCase, getDetailUseCase GetDetailUseCase) Hand
 func (h Handler) Handle(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	route, err := parseRoute(req)
 	if err != nil {
-		return badRequestResponse(), nil
+		return cp.BadRequestResponse(), nil
 	}
 
 	switch route.kind {
 	case routeListUsers:
 		users, execErr := h.listUseCase.Execute(ctx)
 		if execErr != nil {
-			return internalServerErrorResponse(), nil
+			return cp.InternalServerErrorResponse(), nil
 		}
 
 		return okResponse(users)
@@ -38,14 +39,14 @@ func (h Handler) Handle(ctx context.Context, req events.APIGatewayProxyRequest) 
 		user, execErr := h.getDetailUseCase.Execute(ctx, route.userID)
 		if execErr != nil {
 			if execErr == domain.ErrUserNotFound {
-				return notFoundResponse(), nil
+				return cp.NotFoundResponse(), nil
 			}
 
-			return internalServerErrorResponse(), nil
+			return cp.InternalServerErrorResponse(), nil
 		}
 
 		return okResponse(user)
 	default:
-		return notFoundResponse(), nil
+		return cp.NotFoundResponse(), nil
 	}
 }

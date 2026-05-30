@@ -2,8 +2,8 @@
 
 # ビルドファイル
 infra/infra
-seeder
-internal/user/user
+/user
+/main
 
 # node
 node_modules
