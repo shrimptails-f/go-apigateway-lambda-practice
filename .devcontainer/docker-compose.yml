@@ -9,11 +9,8 @@ services:
     env_file:
       - .env
     tty: true
-    depends_on:
-      - "floci"
     ports:
       - ${GO_PORT}:${GO_PORT}
-      - "1455:1455"
     volumes:
       - ../:$APP_ROOT
       - ~/.gitconfig:/root/.gitconfig
