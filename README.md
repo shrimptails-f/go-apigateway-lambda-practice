@@ -31,30 +31,36 @@ cp .devcontainer/.env.sample .devcontainer/.env
 
 ## デプロイ手順
 
-前提:
+- デプロイされるもの
+  - VPC
+  - public subnet
+  - private isolated subnet
+  - API Gateway
+  - Lambda authorizer
+  - ECR ベースの Lambda
+
+### 実AWSの場合
+
+#### 前提
 
 - envにAWS 認証情報を設定していること
   - AWS_ACCESS_KEY_ID
   - AWS_SECRET_ACCESS_KEY
-- ECR に `backend-user` イメージを push 済みであること
+- ECR に `backend-user` リポジトリを作成済みであること
+
+#### デプロイコマンド実行
 
 ```bash
-docker build -f build/user/Dockerfile -t backend-user:3 .
-docker tag backend-user:3 654654388040.dkr.ecr.ap-northeast-1.amazonaws.com/backend-user:3
-docker push 654654388040.dkr.ecr.ap-northeast-1.amazonaws.com/backend-user:3
+# イメージのプッシュ
+docker build -f build/user/Dockerfile -t backend-user:1 .
+docker tag backend-user:1 <アカウントID>.dkr.ecr.ap-northeast-1.amazonaws.com/backend-user:1
+docker push <アカウントID>.dkr.ecr.ap-northeast-1.amazonaws.com/backend-user:1
+
+# デプロイ
 task infra:deploy:aws
 ```
 
-デプロイされるもの:
-
-- VPC
-- public subnet
-- private isolated subnet
-- API Gateway
-- Lambda authorizer
-- ECR ベースの Lambda
-
-# デプロイ後動作確認
+#### デプロイ後動作確認
 
 ```bash
 curl -i -H 'Authorization: Bearer Poc_tokens' https://<API_ID>.execute-api.ap-northeast-1.amazonaws.com/prod/users
